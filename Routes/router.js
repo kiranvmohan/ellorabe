@@ -4,7 +4,7 @@ const router = new express.Router()
 
 
 const userController = require('../Controllers/userController')
-const announceController = require("../Controllers/announceController")
+const{ createAnnouncements,getAnnouncements} = require("../Controllers/announceController")
 
 
 
@@ -14,8 +14,8 @@ const announceController = require("../Controllers/announceController")
 
 router.post('/user/register',userController.registerUser)
 router.post('/user/login',userController.loginUser)
-router.get("/announcements",announceController.getAnnouncements)
-router.post("/announcements",announceController.createAnnouncements)
+router.get("announcements",getAnnouncements)
+router.post("/announcements",createAnnouncements)
 
 
 

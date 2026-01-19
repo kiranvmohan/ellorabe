@@ -18,10 +18,12 @@ elloraServer.use(express.json());
 
 
 const router = require('./Routes/router')
+elloraServer.use("/",router);
 
 
 
-elloraServer.use(router);
+
+
 
 
 
