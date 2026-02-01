@@ -31,7 +31,7 @@ exports.createAnnouncements = async(req,res)=>{
 exports.getAnnouncements = async(req,res)=>{
 
     try{
-        const data = await announcements.find().Sort({postedAt:-1})
+        const data = await announcements.find().sort({postedAt: -1 })
         res.status(200).json(data)
     }
     catch(err){
