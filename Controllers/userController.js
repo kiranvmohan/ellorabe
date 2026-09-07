@@ -1,6 +1,8 @@
 const users = require("../Models/userSchema");
 const jwt = require("jsonwebtoken")
 
+const bycrypt = require('bcryptjs')
+
 
 
 
@@ -23,14 +25,15 @@ exports.registerUser = async (req, res) => {
         if (existingUser) {
             return res.status(409).json("Account already exist")
         }
-        else {
-            console.log("user not found")
+        const hashedpassword = await bcrypt.hash(password,10);
+         
+            
             const newUserData = {
                 name,
                 flatnumber,
                 email,
                 mobilenumber,
-                password,
+                password:hashedpassword,
                 role,
 
             }
@@ -42,7 +45,7 @@ exports.registerUser = async (req, res) => {
             await newUser.save();
             res.status(201).json(`${name} Registered successfully`)
         }
-    } catch (error) {
+     catch (error) {
         console.log("Registration error", error)
         res.status(500).json("Registration failed")
     }
@@ -61,10 +64,11 @@ exports.loginUser = async (req, res) => {
         if(!existingUser){
             return res.status(404).json("User not found")
         }
-        if (existingUser.password!== password){
-            return res.status(401).json("Incorrect password")
-    
+        const isMatch = await bcrypt.compare(password,existingUser.password)
+        if(!isMatch){
+            return res.status(401).json('Incorrect password')
         }
+    
 
         if (role !== existingUser.role){
             return res.status(403).json("Access Denied")
