@@ -1,7 +1,7 @@
 const users = require("../Models/userSchema");
 const jwt = require("jsonwebtoken")
 
-const bycrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs')
 
 
 
